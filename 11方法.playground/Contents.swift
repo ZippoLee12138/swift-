@@ -176,7 +176,7 @@ class Player{
     func complete(level : Int) {
         
         LevelTracker.Unlocked(level: level + 1)
-        tracker.advance(to: level)
+        tracker.advance(to: level + 1)
     }
     
     init(name  : String) {
@@ -191,6 +191,10 @@ class Player{
 
 var player01 = Player(name: "p1")
 player01.complete(level: 2)
+print(LevelTracker.hightestUnlockedLevel)
+
+var player02 = Player(name: "p2")
+player02.complete(level: 5)
 print(LevelTracker.hightestUnlockedLevel)
 
 

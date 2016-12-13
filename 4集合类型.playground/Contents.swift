@@ -4,6 +4,21 @@ import UIKit
 
 var str = "Hello, playground"
 
+
+//数组
+
+var someInts = Array<Int>()
+print(someInts)
+
+var  someInts1 = [Int]()
+print("someInts1 is type of [Int] with \(someInts1.count) items")
+someInts1 = []
+
+var threeDoubles = Array(repeating: 0.0, count: 3)
+print("threeDoubles is \(threeDoubles)")
+
+
+
 var nameOfInters = [Int:String] ()
 nameOfInters[1] = "frist"
 nameOfInters
