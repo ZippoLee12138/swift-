@@ -170,7 +170,16 @@ struct LevelTracker{
 class Player{
     
     var tracker = LevelTracker()
-    let playerName : String
+    var playerName : String{
+        
+        set{
+            self.playerName = newValue
+        }
+     
+        get{
+            return self.playerName
+        }
+    }
     
     
     func complete(level : Int) {
@@ -197,5 +206,5 @@ var player02 = Player(name: "p2")
 player02.complete(level: 5)
 print(LevelTracker.hightestUnlockedLevel)
 
-
+var player03 = Player(name: "p3")
 

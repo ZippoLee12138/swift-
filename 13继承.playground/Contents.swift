@@ -12,16 +12,7 @@ class Vehicle{
         return "traveling at \(currentSpeed) miles per hour"
     }
     
-    var name : String{
-        set{
-            
-            self.name = newValue
-        }
-        
-        get{
-            return self.name
-        }
-    }
+    var name : String = ""
     
     
     func makeNoise()  {
@@ -31,7 +22,7 @@ class Vehicle{
 }
 
 var my_Vehicle = Vehicle()
-my_Vehicle.name
+my_Vehicle.name = "my_Vehicle"
 print(my_Vehicle.description)
 
 
