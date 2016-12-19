@@ -97,6 +97,7 @@ class Car : Vehicle{
 
 var my_car = Car()
 //my_car.name = "Porsche"
+//print(my_car.name)
 //my_car.description
 //print(my_car.name)
 
