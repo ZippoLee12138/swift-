@@ -193,10 +193,50 @@ class Bicycle : Vehicle{
         super.init()
         numOfWheels = 2
     }
-    
 }
 
 var my_bicycle = Bicycle()
 print("Bicycle : \(my_bicycle.description)")
 
 
+
+
+//指定构造器和遍历构造器 构造器的继承
+
+
+class Food {
+    
+    var name : String
+    
+    convenience init(){
+        self.init(name : "[Unnamed]")
+    }
+    
+    init(name : String) {
+        self.name = name
+    }
+    
+}
+
+
+class RecipeIngredient : Food{
+    
+    var quantity : Int
+    
+    init(name : String,quantity : Int) {
+        self.quantity = quantity
+        super.init(name: name)
+    }
+    
+    override convenience init(name : String){
+        self.init(name : name,quantity : 1)
+    }
+    
+}
+
+var my_recipe01 = RecipeIngredient()
+print(my_recipe01)
+var my_recipe02 = RecipeIngredient(name: "11")
+print(my_recipe02)
+var my_recipe03 = RecipeIngredient(name: "22", quantity: 2)
+print(my_recipe03)
