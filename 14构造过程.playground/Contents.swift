@@ -172,3 +172,31 @@ var rect03 = Rect(size: Size(width : 10,height : 10), origin: Point(x : 0,y : 0)
 print(rect03)
 
 
+
+//类的构造器的继承
+
+
+class Vehicle {
+    
+    var numOfWheels = 0
+    
+    var description : String{
+        return "\(numOfWheels) wheels"
+    }
+    
+    
+}
+
+class Bicycle : Vehicle{
+    
+    override init() {
+        super.init()
+        numOfWheels = 2
+    }
+    
+}
+
+var my_bicycle = Bicycle()
+print("Bicycle : \(my_bicycle.description)")
+
+
