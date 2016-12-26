@@ -201,7 +201,7 @@ print("Bicycle : \(my_bicycle.description)")
 
 
 
-//指定构造器和遍历构造器 构造器的继承
+//指定构造器和便利构造器 构造器的继承
 
 
 class Food {
@@ -240,3 +240,170 @@ var my_recipe02 = RecipeIngredient(name: "11")
 print(my_recipe02)
 var my_recipe03 = RecipeIngredient(name: "22", quantity: 2)
 print(my_recipe03)
+
+
+class ShoppingListItemClass : RecipeIngredient {
+    
+    var purchased = false
+    var description : String {
+        var output = ("\(self.name) * \(self.quantity) ")
+        output += purchased ?"✅":"❌"
+        return output
+    }
+    
+}
+
+var shoppingItem01 = ShoppingListItemClass(name:"🐶", quantity: 1)
+shoppingItem01.purchased = true
+
+print(shoppingItem01.description)
+
+var breakfastList = [
+    ShoppingListItemClass(),
+    ShoppingListItemClass(name: "🐼"),
+    ShoppingListItemClass(name: "❄️", quantity: 1)
+]
+
+breakfastList[2].purchased = true
+
+for item in breakfastList {
+    
+   print(item.description)
+    
+}
+
+
+
+//可失败构造器
+
+
+struct Animal {
+    
+    var Species : String
+    
+    init?(species : String){
+        
+        if species.isEmpty  {
+            return nil
+        }
+        self.Species = species
+    }
+    
+}
+
+let animal01 = Animal(species: "")
+
+if animal01 == nil {
+    print("animal01 is nil")
+}
+
+let animal02 =  Animal(species: "Giraffe")
+
+if let giraffe = animal02 {
+    print("giraffe was initalized with a species of \(giraffe.Species)")
+}
+
+
+//重写一个可失败构造器
+
+class Document {
+    
+    var name : String?
+    
+    
+    init() {}
+    
+    init?(name : String) {
+        self.name = name
+        if name.isEmpty {
+            return nil
+        }
+    }
+    
+}
+
+class AutomaticallyNameDocument : Document {
+    
+    override init() {
+        super.init(name : "[Unnamed]")!
+//        self.name = "[Unnamed]"
+    }
+    
+    override init(name : String){
+        super.init()
+        if name.isEmpty {
+            self.name = "[Unnamed]"
+        }else{
+            self.name = name
+        }
+    }
+    
+}
+
+
+
+var my_Document = Document(name:"")
+
+
+//必要构造器
+
+class SomeClass {
+    var name : String
+    
+    required init(name : String) {
+        self.name = name
+    }
+    
+    convenience init() {
+        self.init(name : "[Unnamed]")
+    }
+}
+
+class SomeSubClass : SomeClass {
+    
+//    override convenience init(){
+//        super.init(name: "[Unnamed]")
+//    }
+    
+    required init(name: String) {
+        super.init(name: name)
+    }
+    
+}
+
+//通过闭包或者函数设置属性的默认值
+
+
+struct Checkerboard {
+    
+    let boardColors : [Bool] = {
+        var temporaryBoard = [Bool]()
+        var color = false
+        
+        
+        for i in 1...8{
+            for j in 1...8{
+                temporaryBoard.append(color)
+                color = !color
+            }
+            color = !color
+        }
+
+        
+        return temporaryBoard
+    }()
+    
+    func squateIsBlackAtRow(row : Int,column : Int) -> Bool {
+    
+        return boardColors[row * 8 + column]
+        
+        
+    }
+    
+}
+
+
+var my_checkerboard = Checkerboard()
+my_checkerboard.squateIsBlackAtRow(row: 0, column: 0)
+print(my_checkerboard.squateIsBlackAtRow(row: 7, column: 7))
+
