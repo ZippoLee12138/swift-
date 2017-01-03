@@ -116,15 +116,78 @@ john = nil
 //无主引用以及隐式解析可选类型
 
 
+class Country {
+    
+    let name : String
+    
+    var capitalCity : City!
+    
+    init(name : String,capitalCity : String) {
+        self.name = name
+        self.capitalCity = City(name: capitalCity, country: self)
+        print("Country \(self.name) is initialized")
+    }
+    
+    deinit {
+        print("Country \(self.name) is deinitialized")
+    }
+    
+}
 
 
+class City {
+    
+    let name : String
+    
+    unowned var country : Country
+    
+    init(name : String,country : Country) {
+        self.name = name
+        self.country = country
+        print("City \(self.name) is initialized")
+    }
+    
+    deinit {
+        print("City \(self.name) is deinitialized")
+    }
+}
+
+var China = Country(name: "China", capitalCity: "BeiJing")
+print("\(China.name)'s capital is \(China.capitalCity.name)")
+China.capitalCity = nil
+
+//闭包引起的循环强引用
+
+class HTMLElement {
+    
+    let name : String
+    let text : String?
+    
+    
+    lazy var asHTML : (Void) -> String = {
+        if let text = self.text{
+            return "<\(self.name)>\(text)</\(self.name)>"
+        }else{
+            return "<\(self.name) />"
+        }
+    }
+    
+    
+    
+    init(name : String,text : String? = nil) {
+        self.name = name
+        self.text = text
+        print("HTMLElement \(self.name) is initialized")
+    }
+    
+    deinit {
+        print("HTMLElement \(self.name) is deinitialized")
+    }
+    
+}
+
+var heading = HTMLElement(name: "h1")
+let defaultText = "some default text"
 
 
-
-
-
-
-
-
-
-
+print(heading.asHTML())
