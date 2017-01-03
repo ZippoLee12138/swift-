@@ -65,3 +65,66 @@ unit4A!.tenant = p4
 unit4A = nil
 p4 = nil
 
+
+//无主引用
+
+
+class Customer {
+    
+    
+    let name : String
+    
+    var card : CreditCard?
+    
+    init(name : String) {
+        self.name = name
+        print("Customer \(self.name) is initialized")
+    }
+    
+    deinit {
+        print("\(self.name) is deinitialized")
+    }
+    
+}
+
+class CreditCard {
+    
+    let number : Int64
+    
+    unowned let tenant : Customer
+    
+    init(number : Int64,tenant : Customer) {
+        self.number = number
+        self.tenant = tenant
+        print("CreditCard \(self.number) is initialized")
+    }
+    
+    deinit {
+        print("CreditCard \(number) is deinitialized")
+    }
+    
+}
+
+var john : Customer?
+
+john = Customer(name: "John Appleseed")
+
+john?.card = CreditCard(number: 1234567890123456, tenant: john!)
+
+john = nil
+
+//无主引用以及隐式解析可选类型
+
+
+
+
+
+
+
+
+
+
+
+
+
+
