@@ -22,3 +22,9 @@ if let roomCount = Jhon.residence?.numberOfRooms{
 }else{
     print("Unable to retrieve the number of rooms.")
 }
+
+
+
+
+
+
