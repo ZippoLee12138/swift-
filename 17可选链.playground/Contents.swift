@@ -110,6 +110,7 @@ func creatAddress() -> Address{
 }
 john.residence?.address = creatAddress()
 
+//通过可选链式调用调用方法
 
 if john.residence?.printNumberOfRooms() != nil {
     print("It was possible to print the number of rooms.")
@@ -117,11 +118,72 @@ if john.residence?.printNumberOfRooms() != nil {
     print("It was not possible to print the number of rooms.")
 }
 
+//通过可选链式调用访问下标
+
+if let firstRoomName = john.residence?[0].name {
+    print("The first room name is \(firstRoomName).")
+}else{
+    print("Unable to retrieve the first room name.)")
+}
+
+john.residence?[0] = Room(name: "Bathroom")//赋值失败，因为residence是nil
+
+let johnHouse = Residence01()
+johnHouse.rooms.append(Room(name: "Living Room"))
+johnHouse.rooms.append(Room(name: "Kitchen"))
+
+john.residence = johnHouse
+
+if let room = john.residence?[1] {
+    print("The first room is \(room.name)")
+}else{
+    print("Unable to retrieve the first room name.")
+}
+
+//访问可选类型的下标
+
+var testScores = [ "Dave" : [82,71,66] , "Bav" : [10,33,55]]
+testScores["Dave"]?[0] = 89
+testScores["Bav"]?[0] += 1
+
+if (testScores["Brian"]?[1] = 00) != nil {
+    print("set value success")
+}else{
+    print("set value failed")
+}
+
+//连续多层可选链式调用
+
+if let johnStreet = john.residence?.address?.street{
+    print("John's street name is \(johnStreet)")
+}else{
+    print("Unable to retrieve the address.")
+}
 
 
+let johnsAddress = Address()
+johnsAddress.bulidingName = "The Larches"
+johnsAddress.street = "Laurel Street"
+
+john.residence?.address = johnsAddress
+
+if let johnStreet = john.residence?.address?.street {
+    print("John's street name is \(johnStreet)")
+}else{
+    print("Unable to retrieve the address.")
+}
+
+//在方法的可选返回值上进行可选链式调用
 
 
+if let buildingIdentifier = john.residence?.address?.buildingIdentifier() {
+    print("John's building identifier is \(buildingIdentifier)")
+}
 
-
+if let beginsWithThe = john.residence?.address?.buildingIdentifier()?.hasPrefix("The") {
+    print("John's building identifier begins with \"The\".")
+}else{
+    print("John's building identifier does not begin with \"The\".")
+}
 
 
