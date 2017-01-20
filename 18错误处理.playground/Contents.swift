@@ -18,9 +18,16 @@ throw VendingMachineError.insufficientFunds(coinsNeeded: 5)
 
 //用throwing函数传递错误
 
+struct Item {
+    var price : Int
+    var count : Int
+}
 
-
-
+class VendingMachine {
+    
+    
+    
+}
 
 
 
