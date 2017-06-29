@@ -3,6 +3,7 @@
 import UIKit
 
 var str = "Hello, playground"
+print(str)
 
 //表示并抛出错误
 enum VendingMachineError : Error {
@@ -14,7 +15,7 @@ enum VendingMachineError : Error {
     case outOfStock
 }
 
-throw VendingMachineError.insufficientFunds(coinsNeeded: 5)
+//throw VendingMachineError.insufficientFunds(coinsNeeded: 5)
 
 //处理错误
 
@@ -33,8 +34,14 @@ class VendingMachine {
         "Pretzels" : Item(price: 7, count: 1)
     ]
     
-    func vend(ItemName name : String,money : Int) throws -> Int{
+    var coinsDeposited = 0
+    func dispenseSnack(snack:String) {
+        print("Dispending\(snack)")
+    }
+    
+    func vend(ItemName name : String) throws {
         
+        print("aa")
         guard let selectedItem = inventory[name] else {
             throw VendingMachineError.invalidSelection
         }
@@ -43,27 +50,58 @@ class VendingMachine {
             throw VendingMachineError.outOfStock
         }
         
-        guard selectedItem.price <= money else {
-            throw VendingMachineError.insufficientFunds(coinsNeeded: selectedItem.price - money)
+        guard selectedItem.price <= coinsDeposited else {
+            throw VendingMachineError.insufficientFunds(coinsNeeded: selectedItem.price - coinsDeposited)
         }
         
-        let newMoney = money - selectedItem.price
+        coinsDeposited -= selectedItem.price
         
         var item = selectedItem
         item.count -= 1
         inventory[name] = item
         
-        return newMoney
+        print("Dispending \(name)")
     }
     
 }
 
 
+let favoriteSnacks = [
+    "Alice" : "Chips",
+    "Bob":"Licorice",
+    "Eve":"Pretzels",
+]
 
 
+func buyFavoriteSnack(person:String,vendingMachine:VendingMachine) throws {
+    let snackName = favoriteSnacks[person] ?? "Candy Bar"
+    try vendingMachine.vend(ItemName: snackName)
+}
 
+var myVendingMachine = VendingMachine()
 
+do {
+    try buyFavoriteSnack(person: "B", vendingMachine: myVendingMachine)
+} catch VendingMachineError.invalidSelection {
+    print("Invalid Selection.")
+} catch VendingMachineError.outOfStock{
+    print("Out of Stock.")
+} catch VendingMachineError.insufficientFunds(let coinsNeeded){
+    print("Insufficient funds.Please insert an additional \(coinsNeeded) coins.")
+}
+print("bb")
 
-
+func processFile(filename:String) throws {
+    if exists(filename){
+        let file = open(filename)
+        defer {
+            close(file)
+        }
+        while let line = try file.readline(){
+            // 处理文件。
+        }
+        // close(file) 会在这里被调用，即作用域的最后。
+    }
+}
 
 
